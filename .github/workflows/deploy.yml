@@ -26,9 +26,13 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
     
-      - name: 'Use gcloud CLI'
-        run: 'gcloud storage buckets list'
+      - id: 'list'
+        name: 'List buckets'
+        run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }}) >> $GITHUB_STEP_SUMMARY
 
+      - name: "Check if bucket exists"
+        run: echo "${{ steps.list.outputs.buckets }}"
+        
     #   - id: 'upload-file'
     #     uses: 'google-github-actions/upload-cloud-storage@v1'
     #     with:
