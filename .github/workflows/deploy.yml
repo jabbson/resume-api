@@ -38,4 +38,8 @@ jobs:
         
       - id: 'updload'
         name: "Upload file to the bucket"
-        run: gsutil cp src/resume/resume.json gs://${{ vars.GCS_BUCKET_NAME }}
+        run: gsutil cp src/resume/resume.json gs://${{ vars.GCS_BUCKET_NAME }}/${{ vars.GCS_FILE_NAME }}
+
+      - id: 'function'
+        name: "Create Cloud function"
+        run: gcloud functions deploy ${{ vars.CLOUD_FUNCTION_NAME }} --gen2 --region=${{ vars.REGION }} --runtime=python311 --source=src/cf_code --entry_point=get_blob --trigger_http --set-env-vars BUCKET=${{ vars.GCS_BUCKET_NAME }},FILE=${{ vars.GCS_FILE_NAME }}
