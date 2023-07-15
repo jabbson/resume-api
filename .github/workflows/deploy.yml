@@ -28,7 +28,7 @@ jobs:
     
       - id: 'list'
         name: 'List buckets'
-        run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }}) >> $GITHUB_OUTPUT
+        run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
 
       - name: "Check if bucket exists"
         run: echo "${{ steps.list.outputs.buckets }}"
