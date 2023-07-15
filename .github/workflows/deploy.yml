@@ -24,4 +24,4 @@ jobs:
         uses: 'google-github-actions/upload-cloud-storage@v1'
         with:
           path: '/src/resume/resume.json'
-          destination: ${{ env.GCS_BUCKET_NAME }}
+          destination: '${{ env.GCS_BUCKET_NAME }}/resume.json'
