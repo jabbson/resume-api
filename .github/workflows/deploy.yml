@@ -23,14 +23,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-    #   - name: 'Set up Cloud SDK'
-    #     uses: 'google-github-actions/setup-gcloud@v1'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
     
-    #   - name: 'Use gcloud CLI'
-    #     run: 'gcloud info'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud storage buckets list'
 
-      - id: 'upload-file'
-        uses: 'google-github-actions/upload-cloud-storage@v1'
-        with:
-          path: 'src/resume/resume.json'
-          destination: '${{ vars.GCS_BUCKET_NAME }}/resume.json'
+    #   - id: 'upload-file'
+    #     uses: 'google-github-actions/upload-cloud-storage@v1'
+    #     with:
+    #       path: 'src/resume/resume.json'
+    #       destination: '${{ vars.GCS_BUCKET_NAME }}/resume.json'
