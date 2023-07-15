@@ -23,6 +23,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
+      - name: Dump variable names
+        run: echo "$GITHUB_CONTEXT"
+
       - id: 'upload-file'
         uses: 'google-github-actions/upload-cloud-storage@v1'
         with:
