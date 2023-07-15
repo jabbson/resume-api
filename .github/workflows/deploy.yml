@@ -31,8 +31,8 @@ jobs:
         name: 'List buckets'
         run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
 
-      - id: 'check'
-        name: "Check if bucket exists"
+      - id: 'bucket'
+        name: "Create a Cloud Storage Bucket"
         run: gcloud storage buckets create gs://${{ vars.GCS_BUCKET_NAME }}
         if: ${{ steps.list.outputs.buckets == 'Listed 0 items.' }}
         
