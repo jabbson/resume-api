@@ -9,6 +9,9 @@ on:
 
 jobs:
     job_id:
+      permissions:
+        contents: 'read'
+      
       runs-on: ubuntu-latest
 
       steps:
