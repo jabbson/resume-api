@@ -31,7 +31,9 @@ jobs:
         run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
 
       - name: "Check if bucket exists"
-        run: echo "${{ steps.list.outputs.buckets }}"
+        run: echo "Bucket doesn't exist"
+        if: ${{ steps.list.outputs.buckets == 'Listed 0 items.' }}
+        
 
     #   - id: 'upload-file'
     #     uses: 'google-github-actions/upload-cloud-storage@v1'
