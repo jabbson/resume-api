@@ -3,15 +3,11 @@ name: CI
 on:
   push:
     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
+
   workflow_dispatch:
 
 jobs:
     job_id:
-      permissions:
-        contents: 'read'
-      
       runs-on: ubuntu-latest
 
       steps:
