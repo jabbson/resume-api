@@ -24,7 +24,7 @@ jobs:
         name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
     
-      - id: 'list buckets'
+      - id: 'list_buckets'
         # here we list existing buckets to decide if
         # the bucket needs to be deleted
         name: 'List buckets'
@@ -34,9 +34,9 @@ jobs:
         # here we remove the bucket if we found it during last step
         name: "(OPT) Remove Cloud Storage bucket"
         run: gcloud storage buckets delete gs://${{ vars.GCS_BUCKET_NAME }}
-        if: ${{ steps.list_buckets.outputs.buckets =! 'Listed 0 items.' }}
+        if: ${{ steps.list_buckets.outputs.buckets != 'Listed 0 items.' }}
         
-      - id: 'list functions'
+      - id: 'list_functions'
         # here we list existing functions to decide if
         # the function needs to be deleted
         name: 'List functions'
@@ -46,4 +46,4 @@ jobs:
         # here we remove the function if we found it during last step
         name: "(OPT) Remove Cloud Function"
         run: gcloud functions delete ${{ vars.CLOUD_FUNCTION_NAME }}
-        if: ${{ steps.list_functions.outputs.functions =! 'Listed 0 items.' }}
+        if: ${{ steps.list_functions.outputs.functions != 'Listed 0 items.' }}
