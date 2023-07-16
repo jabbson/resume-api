@@ -69,7 +69,7 @@ jobs:
         run: ${{ steps.print.outputs.command }}
 
       - id: 'notify'
-        name: "Send push notification on success"
+        name: "(OPT) Send push notification on success"
         if: ${{ vars.RUN_TESTS }}
         run: |
           curl -s \
