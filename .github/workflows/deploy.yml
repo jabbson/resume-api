@@ -70,9 +70,11 @@ jobs:
 
       - id: 'notify'
         name: "Send push notification on success"
+        if: ${{ vars.RUN_TESTS }}
         run: |
           curl -s \
           --form-string "token=${{ secrets.NOTIFY_TOKEN }}" \
           --form-string "user=${{ secrets.NOTIFY_USER }}" \
           --form-string "message=\"$GITHUB_WORKFLOW\" workflow finished successfully" \
           https://api.pushover.net/1/messages.json
+        
