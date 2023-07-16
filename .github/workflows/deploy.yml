@@ -6,7 +6,7 @@ on:
     paths:
     # only the following paths will trigger github actions
       - src/**
-      - .github/workflows/**
+      - .github/workflows/deploy.yml
 
   workflow_dispatch:
 
