@@ -43,4 +43,4 @@ jobs:
       - id: 'print'
         name: "Print command to execute the function"
         run: |
-          echo "curl -m 70 -X GET `gcloud functions describe ars_resume_function --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
+          echo "curl -m 70 -X GET `gcloud functions describe ${{ vars.CLOUD_FUNCTION_NAME }} --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
