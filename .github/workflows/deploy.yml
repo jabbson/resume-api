@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-    job_id:
+    build:
       runs-on: ubuntu-latest
 
       steps:
@@ -58,4 +58,10 @@ jobs:
         # to trigger the function
         name: "Print command to execute the function"
         run: |
-          echo "curl -m 70 -X GET `gcloud functions describe ${{ vars.CLOUD_FUNCTION_NAME }} --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
+          curl="curl -m 70 -X GET `gcloud functions describe ${{ vars.CLOUD_FUNCTION_NAME }} --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
+          echo command=$curl >> $GITHUB_OUTPUT
+          echo $curl
+
+      - id: 'test'
+        name: "Test url with curl"
+        run: bash -c "${{ steps.print.outputs.command }}"
