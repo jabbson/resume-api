@@ -63,5 +63,7 @@ jobs:
           echo $curl
 
       - id: 'test'
+        # here we test that deployed function actually returns the json from 
+        # Cloud Storage bucket
         name: "Test url with curl"
         run: ${{ steps.print.outputs.command }}
