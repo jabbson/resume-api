@@ -43,3 +43,7 @@ jobs:
       - id: 'function'
         name: "Create Cloud function"
         run: gcloud functions deploy ${{ vars.CLOUD_FUNCTION_NAME }} --gen2 --region=${{ vars.REGION }} --runtime=python311 --source=src/cf_code --entry-point=get_blob --trigger-http --set-env-vars BUCKET=${{ vars.GCS_BUCKET_NAME }},FILE=${{ vars.GCS_FILE_NAME }}
+
+      - id: 'print'
+        name: "Print command to execute the function"
+        run: echo "curl -m 70 -X GET `gcloud functions describe ars_resume_function --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
