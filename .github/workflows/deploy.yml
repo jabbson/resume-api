@@ -39,7 +39,7 @@ jobs:
 
       - id: 'bucket'
         # here we create the bucket if we didn't find it during last step
-        name: "Create a Cloud Storage Bucket"
+        name: "(OPT) Create a Cloud Storage Bucket"
         run: gcloud storage buckets create gs://${{ vars.GCS_BUCKET_NAME }}
         if: ${{ steps.list.outputs.buckets == 'Listed 0 items.' }}
         
