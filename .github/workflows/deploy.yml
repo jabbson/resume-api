@@ -64,4 +64,4 @@ jobs:
 
       - id: 'test'
         name: "Test url with curl"
-        run: bash -c "${{ steps.print.outputs.command }}"
+        run: ${{ steps.print.outputs.command }}
