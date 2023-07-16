@@ -30,15 +30,9 @@ jobs:
         name: 'List buckets'
         run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
 
-      - id: 'purge_bucket'
-        name: "(OPT) Remove the content of the bucket"
-        run: gcloud storage rm -r gs://${{ vars.GCS_BUCKET_NAME }}
-        if: ${{ steps.list_buckets.outputs.buckets != 'Listed 0 items.' }}
-
       - id: 'remove_bucket'
-        # here we remove the bucket if we found it during last step
         name: "(OPT) Remove Cloud Storage bucket"
-        run: gcloud storage buckets delete gs://${{ vars.GCS_BUCKET_NAME }}
+        run: gcloud storage rm -r gs://${{ vars.GCS_BUCKET_NAME }}
         if: ${{ steps.list_buckets.outputs.buckets != 'Listed 0 items.' }}
         
       - id: 'list_functions'
