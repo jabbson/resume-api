@@ -71,13 +71,14 @@ jobs:
         # here we test that deployed function actually returns the json from 
         # Cloud Storage bucket
         name: "Test url with curl"
+        if: ${{ vars.RUN_TESTS }}
         run: ${{ steps.print.outputs.command }}
 
       - id: 'notify'
         # here we notify of successful build using pushover
         # see https://pushover.net/ for details
         name: "(OPT) Send push notification on success"
-        if: ${{ vars.RUN_TESTS }}
+        if: ${{ vars.NOTIFY }}
         run: |
           curl -s \
           --form-string "token=${{ secrets.NOTIFY_TOKEN }}" \
