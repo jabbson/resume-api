@@ -16,6 +16,11 @@ jobs:
 
       steps:
       - uses: 'actions/checkout@v3'
+
+      - id: 'validate'
+        # here we validate the json file to have correct syntax
+        name: "Validate resume.json"
+        run: python3 -mjson.tool src/resume/resume.json > /dev/null || echo "invalid resume json"      
   
       - id: 'auth'
         # here we authenticate with GCP using Service Account
