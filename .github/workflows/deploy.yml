@@ -1,4 +1,4 @@
-name: CI
+name: DEPLOY TO GCP
 
 on:
   push:
@@ -67,3 +67,12 @@ jobs:
         # Cloud Storage bucket
         name: "Test url with curl"
         run: ${{ steps.print.outputs.command }}
+
+      - id: 'notify'
+        name: "Send push notification on success"
+        run: |
+          curl -s \
+          --form-string "token=${{ secrets.NOTIFY_TOKEN }}" \
+          --form-string "user=${{ secrets.NOTIFY_USER }}" \
+          --form-string "message='DEPLOY TO GCP' workflow successfully finished" \
+          https://api.pushover.net/1/messages.json
