@@ -1,4 +1,4 @@
-name: CLENAUP
+name: CLEANUP
 
 on:
   workflow_dispatch:
