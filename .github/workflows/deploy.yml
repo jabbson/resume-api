@@ -4,7 +4,9 @@ on:
   push:
     branches: [ "main" ]
     paths:
+    # only the following paths will trigger github actions
       - src/**
+      - .github/workflows/**
 
   workflow_dispatch:
 
@@ -16,33 +18,44 @@ jobs:
       - uses: 'actions/checkout@v3'
   
       - id: 'auth'
+        # here we authenticate with GCP using Service Account
+        # json stored in github secrets
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - id: 'setup'
+        # here we setup gcloud / Cloud SDK to use it
+        # later in the workflow
         name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
     
       - id: 'list'
+        # here we list existing buckets to decide if
+        # the bucket needs to be created or already exists
         name: 'List buckets'
         run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
 
       - id: 'bucket'
+        # here we create the bucket if we didn't find it during last step
         name: "Create a Cloud Storage Bucket"
         run: gcloud storage buckets create gs://${{ vars.GCS_BUCKET_NAME }}
         if: ${{ steps.list.outputs.buckets == 'Listed 0 items.' }}
         
       - id: 'updload'
+        # here we upload the file to the bucket
         name: "Upload file to the bucket"
         run: gsutil cp src/resume/resume.json gs://${{ vars.GCS_BUCKET_NAME }}/${{ vars.GCS_FILE_NAME }}
 
       - id: 'function'
+        # here we deploy the function code
         name: "Create Cloud function"
         run: gcloud functions deploy ${{ vars.CLOUD_FUNCTION_NAME }} --gen2 --region=${{ vars.REGION }} --runtime=python311 --source=src/cf_code --entry-point=get_blob --trigger-http --set-env-vars BUCKET=${{ vars.GCS_BUCKET_NAME }},FILE=${{ vars.GCS_FILE_NAME }}
 
       - id: 'print'
+        # here we output the curl command that can be used
+        # to trigger the function
         name: "Print command to execute the function"
         run: |
           echo "curl -m 70 -X GET `gcloud functions describe ${{ vars.CLOUD_FUNCTION_NAME }} --format=\"get('url')\"` -H \"Authorization: bearer \$(gcloud auth print-identity-token)\""
