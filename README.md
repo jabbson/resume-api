@@ -19,7 +19,10 @@ Build status: <br />
 
 **(OPTIONAL) Push Notification via [Pushover](https://pushover.net/):**
 --
-If you would like to get push notifications on successful build, add the following secrets and the variable:
+If you would like to run a test on successful build, add the following variable:
+- set the variable (`RUN_TESTS`) to `true`
+
+If you would like to get push notifications on successful build or cleanup, add the following secrets and the variable:
 - set the secret (`NOTIFY_TOKEN`) to match your pushover key token
 - set the secret (`NOTIFY_USER`) to match your pushover user token
-- set the variable (`RUN_TESTS`) to `true`
+- set the variable (`NOTIFY`) to `true`
