@@ -9,4 +9,5 @@ def get_blob(request):
     bucket = storage_client.bucket(os.environ.get('BUCKET'))
     blob = bucket.blob(os.environ.get('FILE'))
     resume = blob.download_as_text()
-    return resume
+    headers = {'Content-Type': 'application/json'}
+    return (resume, 200, headers)
