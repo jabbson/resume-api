@@ -1,0 +1,49 @@
+name: CLENAUP
+
+on:
+  workflow_dispatch:
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: 'actions/checkout@v3'
+  
+      - id: 'auth'
+        # here we authenticate with GCP using Service Account
+        # json stored in github secrets
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - id: 'setup'
+        # here we setup gcloud / Cloud SDK to use it
+        # later in the workflow
+        name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+    
+      - id: 'list buckets'
+        # here we list existing buckets to decide if
+        # the bucket needs to be deleted
+        name: 'List buckets'
+        run: echo buckets=$(gcloud storage buckets list --filter=name=${{ vars.GCS_BUCKET_NAME }} 2>&1) >> $GITHUB_OUTPUT
+
+      - id: 'remove_bucket'
+        # here we remove the bucket if we found it during last step
+        name: "(OPT) Remove Cloud Storage bucket"
+        run: gcloud storage buckets delete gs://${{ vars.GCS_BUCKET_NAME }}
+        if: ${{ steps.list_buckets.outputs.buckets =! 'Listed 0 items.' }}
+        
+      - id: 'list functions'
+        # here we list existing functions to decide if
+        # the function needs to be deleted
+        name: 'List functions'
+        run: echo functions=$(gcloud functions list --filter=name~${{ vars.CLOUD_FUNCTION_NAME }} 2>&1) >> $GITHUB_OUTPUT
+
+      - id: 'remove_function'
+        # here we remove the function if we found it during last step
+        name: "(OPT) Remove Cloud Function"
+        run: gcloud functions delete ${{ vars.CLOUD_FUNCTION_NAME }}
+        if: ${{ steps.list_functions.outputs.functions =! 'Listed 0 items.' }}
