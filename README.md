@@ -3,14 +3,18 @@
 <img src=https://www.freeiconspng.com/uploads/resume-icon-png-10.png>
 </p>
 
-Build status: <br />
+Build status:
+--
 [![RESUME-API](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml) <br />
 [![CLEANUP](https://github.com/jabbson/resume-api/actions/workflows/cleanup.yml/badge.svg)](https://github.com/jabbson/resume-api/actions/workflows/cleanup.yml)
 
 **HOW TO USE:**
 --
 - Fork the repository to have your own copy of the code
-- Provision the [service account](https://cloud.google.com/iam/docs/service-accounts-create) in your GCP project
+- Provision the [service account](https://cloud.google.com/iam/docs/service-accounts-create) in your GCP project with the following permissions:
+  - Cloud Functions Admin
+  - Service Account User
+  - Storage Admin
 - Set the github secret (`GCP_SERVICE_ACCOUNT`) with the content of the service account json key
 - Set the following github variables:
   - (`CLOUD_FUNCTION_NAME`): name of the Cloud Function to create
