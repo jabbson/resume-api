@@ -4,7 +4,8 @@
 </p>
 
 Build status: <br />
-[![RESUME-API](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml)
+[![RESUME-API](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/jabbson/resume-api/actions/workflows/deploy.yml) <br />
+[![CLEANUP](https://github.com/jabbson/resume-api/actions/workflows/cleanup.yml/badge.svg)](https://github.com/jabbson/resume-api/actions/workflows/cleanup.yml)
 
 **HOW TO USE:**
 --
